@@ -30,17 +30,73 @@ public class Estacionamento {
         return nome;
     }
     
-    public void cadastrarVeiculo(String placa, String modelo, int anoFabricacao, String cor){
-        veiculos = new Veiculo(placa, modelo, modelo, anoFabricacao, cor);
+    public boolean cadastraVeiculo(String placa, String modelo, String fabricante, int anoFabricacao, String cor){
 
+        for(Veiculo aux : veiculos){
+            if(aux.getPlaca().equals(placa))return false;
+        }
+
+        Veiculo veiculo = new Veiculo(placa, modelo, fabricante, anoFabricacao, cor);
+
+        veiculos.add(veiculo);
+        return true;
     }
 
-    public ArrayList<Veiculo> listarTodosVeiculos(){
+    public ArrayList<Veiculo> listaTodosVeiculos(){
         return veiculos;
     }
 
-    public ArrayList<Veiculo> listarVeiculosEstacionados(){
-        return veiculos;
+    public ArrayList<Veiculo> listaVeiculosEstacionados(){
+
+        ArrayList<Veiculo> estacionados = new ArrayList<>();
+
+        for(Veiculo aux : veiculos){   
+            if(aux.isEstaEstacionado() == true){
+                estacionados.add(aux);
+
+            }
+        }
+
+        return estacionados;
+    }
+
+    public Veiculo buscarVeiculo(String placa){
+        for(Veiculo aux : veiculos){
+            if(aux.getPlaca().equals(placa)){
+                return aux;
+            }
+        }
+
+        return null;
+
+    }
+
+    public boolean registraEntrada(String placa){
+        for(Veiculo aux : veiculos){
+            if(aux.getPlaca().equals(placa)){
+                if(aux.isEstaEstacionado() == false){
+                    aux.registraEntrada();
+                    return true;
+                }
+            }
+        }
+
+        return false;
+
+    }
+
+    public boolean registraSaida(String placa){
+        for(Veiculo aux : veiculos){
+            if(aux.getPlaca().equals(placa)){
+                if(aux.isEstaEstacionado() == true){
+                    aux.registraSaida();
+                    return true;
+                }
+            }
+        }
+
+        return false;
+
     }
 
 
